@@ -1,5 +1,6 @@
 package com.ntg.Ntg_User_Management_System.controller;
 
+import com.ntg.Ntg_User_Management_System.model.LoginRequest;
 import com.ntg.Ntg_User_Management_System.model.User;
 import com.ntg.Ntg_User_Management_System.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +51,8 @@ public class UserController {
     public List<User> GetAllUsers(){
         return userService.findAllUsers();
     }
-    @GetMapping("/login")
-    public User login(@RequestParam String username ,@RequestParam String password){
-        return userService.login(username,password);
+    @PostMapping("/login")
+    public User login(@RequestBody LoginRequest loginRequest){
+        return userService.login(loginRequest.getUsername(), loginRequest.getPassword());
     }
 }
