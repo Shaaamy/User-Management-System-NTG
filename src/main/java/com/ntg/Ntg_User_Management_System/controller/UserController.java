@@ -1,5 +1,6 @@
 package com.ntg.Ntg_User_Management_System.controller;
 
+import com.ntg.Ntg_User_Management_System.dto.UserDTO;
 import com.ntg.Ntg_User_Management_System.model.LoginRequest;
 import com.ntg.Ntg_User_Management_System.model.User;
 import com.ntg.Ntg_User_Management_System.service.UserService;
@@ -22,16 +23,16 @@ public class UserController {
     public String register(@RequestBody User user){
         return userService.createUser(user);
     }
-    @GetMapping("/id/{id}")
-    public User getUserById(@PathVariable int id){
+    @GetMapping("/{id}")
+    public UserDTO getUserById(@PathVariable int id){
         return userService.findUserById(id);
     }
     @GetMapping("/username/{username}")
-    public User getUserByUserName(@PathVariable String username){
+    public UserDTO getUserByUserName(@PathVariable String username){
         return userService.findUserByUsername(username);
     }
-    @GetMapping("/{value}")
-    public User getUser(@PathVariable String value){
+    @GetMapping("/both/{value}")
+    public UserDTO getUser(@PathVariable String value){
         try{
             int id = Integer.parseInt(value);
             return userService.findUserById(id);
@@ -39,20 +40,20 @@ public class UserController {
             return userService.findUserByUsername(value);
         }
     }
-    @PutMapping("/edit/{id}")
+    @PutMapping("/{id}")
     public String updateUser(@RequestBody User user , @PathVariable int id){
         return userService.updateUser(user , id);
     }
-    @PutMapping("/setdelete/{id}")
+    @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable int id){
         return userService.setUserToDelete(id);
     }
     @GetMapping()
-    public List<User> GetAllUsers(){
+    public List<UserDTO> GetAllUsers(){
         return userService.findAllUsers();
     }
     @PostMapping("/login")
-    public User login(@RequestBody LoginRequest loginRequest){
+    public UserDTO login(@RequestBody LoginRequest loginRequest){
         return userService.login(loginRequest.getUsername(), loginRequest.getPassword());
     }
 }

@@ -1,5 +1,6 @@
 package com.ntg.Ntg_User_Management_System.service;
 
+import com.ntg.Ntg_User_Management_System.dto.UserDTO;
 import com.ntg.Ntg_User_Management_System.model.User;
 import com.ntg.Ntg_User_Management_System.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,11 @@ public class UserService {
         return userRepository.save(user);
     }
     // Method to find user by id
-    public User findUserById(int id){
+    public UserDTO findUserById(int id){
         return userRepository.findById(id);
     }
     // Method to find user by username
-    public User findUserByUsername(String username){
+    public UserDTO findUserByUsername(String username){
         return userRepository.findByUsername(username);
     }
     // Method to update user
@@ -47,10 +48,10 @@ public class UserService {
         return userRepository.setToDelete(id);
     }
     // Method to find all users
-    public List<User> findAllUsers(){
+    public List<UserDTO> findAllUsers(){
         return userRepository.findAll();
     }
-    public User login(String username,String enteredPassword){
+    public UserDTO login(String username,String enteredPassword){
         String userPassword = userRepository.getPassword(username);
         if(BCrypt.checkpw(enteredPassword,userPassword)){
             return userRepository.findByUsername(username);

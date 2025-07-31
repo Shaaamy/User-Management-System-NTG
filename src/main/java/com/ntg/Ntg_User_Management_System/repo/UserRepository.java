@@ -1,5 +1,6 @@
 package com.ntg.Ntg_User_Management_System.repo;
 
+import com.ntg.Ntg_User_Management_System.dto.UserDTO;
 import com.ntg.Ntg_User_Management_System.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,12 +39,12 @@ public class UserRepository {
         return "User created with ID: " + generatedId;
     }
     // Method to find a user by id
-    public User findById(int id) {
+    public UserDTO findById(int id) {
         String sql = "SELECT * FROM users WHERE id = ?";
         return jdbcTemplate.query(sql , new UserRowMapper(),id).stream().findFirst().orElseThrow(() -> new RuntimeException("User not found with id " + id));
     }
     // Method to find a user by username
-    public User findByUsername(String username){
+    public UserDTO findByUsername(String username){
         String sql = "SELECT * FROM users WHERE username LIKE ?";
         String pattern = "%" + username + "%";
         return jdbcTemplate.query(sql,new UserRowMapper(),pattern).stream().findFirst().orElseThrow(()-> new RuntimeException("User not found with username "+username));
@@ -77,7 +78,7 @@ public class UserRepository {
         return "User with ID " + id +" is set to be deleted";
     }
     // Method to find all
-    public List<User> findAll(){
+    public List<UserDTO> findAll(){
         String sql = "SELECT * FROM users";
         return jdbcTemplate.query(sql , new UserRowMapper());
     }
